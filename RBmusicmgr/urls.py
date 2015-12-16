@@ -18,17 +18,21 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 
-from mgrApp.models import Client
+from mgrApp.models import Client, Musician
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        # fields = ('url', 'username', 'email', 'is_staff')
+        fields = ('url', 'username', 'email', 'is_staff')
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
+
+class MusicianSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Musician
 
 
 # ViewSets define the view behavior.
@@ -40,10 +44,15 @@ class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
 
+class MusicianViewSet(viewsets.ModelViewSet):
+    queryset = Musician.objects.all()
+    serializer_class = MusicianSerializer
+
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'clients', ClientViewSet)
+router.register(r'musicians', MusicianViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
