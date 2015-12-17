@@ -39,14 +39,29 @@ class Musician(models.Model):
 class AudioFiles(models.Model):
     band = models.ForeignKey(Client)
     display_name = models.CharField(max_length=20)
-    file_name =
-    type =
-    audio_file =
+    file_name = models.CharField(max_length=20, blank=True, null=True)
+    type = models.CharField(max_length=20, blank=True, null=True)
+    audio_file = models.FileField(upload_to='uploads/')
 
+    class Meta:
+            verbose_name = 'Audio File'
+            verbose_name_plural = 'Audio Files'
+            ordering = ['band', 'display_name', 'type']
+
+    def __str__(self):
+        return ("{} - {} - {}".format(self.band, self.display_name, self.type))
 
 class ImageFiles(models.Model):
     band = models.ForeignKey(Client)
     display_name = models.CharField(max_length=20)
-    file_name =
-    type =
-    image_file =
+    file_name = models.CharField(max_length=20, blank=True, null=True)
+    type = models.CharField(max_length=20, blank=True, null=True)
+    image_file = models.FileField(upload_to='uploads/')
+
+    class Meta:
+            verbose_name = 'Image File'
+            verbose_name_plural = 'Image Files'
+            ordering = ['band', 'display_name', 'type']
+
+    def __str__(self):
+        return ("{} - {} - {}".format(self.band, self.display_name, self.type))
