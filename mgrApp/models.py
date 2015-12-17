@@ -15,6 +15,7 @@ class Client(models.Model):
     def __str__(self):
         return ("{}".format(self.artist_name))
 
+
 class Musician(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
@@ -33,3 +34,19 @@ class Musician(models.Model):
 
     def __str__(self):
         return ("{} {} from {}".format(self.first_name, self.last_name, self.band))
+
+
+class AudioFiles(models.Model):
+    band = models.ForeignKey(Client)
+    display_name = models.CharField(max_length=20)
+    file_name =
+    type =
+    audio_file =
+
+
+class ImageFiles(models.Model):
+    band = models.ForeignKey(Client)
+    display_name = models.CharField(max_length=20)
+    file_name =
+    type =
+    image_file =
