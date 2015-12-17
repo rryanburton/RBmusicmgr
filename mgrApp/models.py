@@ -1,6 +1,5 @@
-import os
-
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Client(models.Model):
@@ -65,3 +64,16 @@ class ImageFiles(models.Model):
 
     def __str__(self):
         return ("{} - {} - {}".format(self.band, self.display_name, self.type))
+
+
+class Manager(models.Model):
+    user = models.ForeignKey(User)
+    bands = models.ManyToManyField(Client)
+
+    class Meta:
+            verbose_name = 'Manager'
+            verbose_name_plural = 'Managers'
+
+
+    def __str__(self):
+        return ("{} - {} ".format(self.user, self.bands))

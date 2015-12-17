@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 
-from mgrApp.models import Client, Musician
+from mgrApp.models import Client, Musician, Manager, AudioFiles, ImageFiles
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,6 +34,17 @@ class MusicianSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Musician
 
+class ManagerSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Manager
+
+class AudioFilesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = AudioFiles
+
+class ImageFilesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ImageFiles
 
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
@@ -48,11 +59,26 @@ class MusicianViewSet(viewsets.ModelViewSet):
     queryset = Musician.objects.all()
     serializer_class = MusicianSerializer
 
+class ManagerViewSet(viewsets.ModelViewSet):
+    queryset = Manager.objects.all()
+    serializer_class = ManagerSerializer
+
+class AudioFilesViewSet(viewsets.ModelViewSet):
+    queryset = AudioFiles.objects.all()
+    serializer_class = AudioFilesSerializer
+
+class ImageFilesViewSet(viewsets.ModelViewSet):
+    queryset = ImageFiles.objects.all()
+    serializer_class = ImageFilesSerializer
+
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'clients', ClientViewSet)
 router.register(r'musicians', MusicianViewSet)
+router.register(r'managers', ManagerViewSet)
+router.register(r'audio-files', AudioFilesViewSet)
+router.register(r'images', ImageFilesViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
