@@ -11,7 +11,9 @@ class Client(models.Model):
             verbose_name = 'Client'
             verbose_name_plural = 'Clients'
             ordering = ['artist_name']
-
+            permissions = (
+                ('view_client', 'View client'),
+            )
     def __str__(self):
         return ("{}".format(self.artist_name))
 
