@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'mgrApp',
     'rest_framework',
     'rest_framework_swagger',
+    'guardian',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -71,6 +72,11 @@ TEMPLATES = [
         },
     },
 ]
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # this is default
+    'guardian.backends.ObjectPermissionBackend',
+)
+ANONYMOUS_USER_ID = -1
 
 WSGI_APPLICATION = 'RBmusicmgr.wsgi.application'
 
