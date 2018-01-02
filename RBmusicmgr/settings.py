@@ -25,7 +25,7 @@ SECRET_KEY = 'g_$8sxulv*&=+5eq5*0^ui5-pvejg01-m5@8kx^)50aqf^uzh*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,16 +43,16 @@ INSTALLED_APPS = (
     'guardian',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-)
+]
+
 
 ROOT_URLCONF = 'RBmusicmgr.urls'
 
@@ -86,6 +86,10 @@ WSGI_APPLICATION = 'RBmusicmgr.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'default_postgresql': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'rbmgr-db',
         'USER': '',

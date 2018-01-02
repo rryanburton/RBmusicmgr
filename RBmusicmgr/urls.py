@@ -17,8 +17,10 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
+from rest_framework_swagger.views import get_swagger_view
 
 from mgrApp.models import Client, Musician, Manager, AudioFiles, ImageFiles
+
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,50 +28,67 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ('url', 'username', 'email', 'is_staff')
 
+
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
+        fields = '__all__'
+
 
 class MusicianSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Musician
+        fields = '__all__'
+
 
 class ManagerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Manager
+        fields = '__all__'
+
 
 class AudioFilesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AudioFiles
+        fields = '__all__'
+
 
 class ImageFilesSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ImageFiles
+        fields = '__all__'
+
 
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+
 class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
+
 
 class MusicianViewSet(viewsets.ModelViewSet):
     queryset = Musician.objects.all()
     serializer_class = MusicianSerializer
 
+
 class ManagerViewSet(viewsets.ModelViewSet):
     queryset = Manager.objects.all()
     serializer_class = ManagerSerializer
+
 
 class AudioFilesViewSet(viewsets.ModelViewSet):
     queryset = AudioFiles.objects.all()
     serializer_class = AudioFilesSerializer
 
+
 class ImageFilesViewSet(viewsets.ModelViewSet):
     queryset = ImageFiles.objects.all()
     serializer_class = ImageFilesSerializer
+
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -80,11 +99,13 @@ router.register(r'managers', ManagerViewSet)
 router.register(r'audio-files', AudioFilesViewSet)
 router.register(r'images', ImageFilesViewSet)
 
+swagger_view = get_swagger_view()
+
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^docs/', include('rest_framework_swagger.urls')),
+    url(r'^admin/', admin.site.urls,),
+    url(r'^docs/', swagger_view),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
